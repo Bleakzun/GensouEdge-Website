@@ -1,12 +1,13 @@
 /* 使用根部节点托管颜色，随便改 */
 :root {
-    --brand-colour: #2f2f2f;     /* 深灰-接近墨色 */
-    --accent-colour: #cbb279;    /* 金棕调，带传统气质 */
+    --brand-colour: #333;
+    --brand-active: #008CBA;
+    --accent-colour: #dadada;
     --text-colour: #333;
     --muted-text: #666;
-    --bg-colour: #f6f5f1;        /* 米灰色背景 */
-    --card-bg: #ffffff;
-    --border-colour: #e8e4da;
+    --bg-colour: #f1f1f1;
+    --card-bg: #fff;
+    --border-colour: #e0e0e0;
 }
 
 
