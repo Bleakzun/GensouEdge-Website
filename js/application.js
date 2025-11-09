@@ -48,7 +48,14 @@ document.addEventListener('DOMContentLoaded', () => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const page = link.getAttribute('data-page');
-            window.location.hash = page;
+            if (page === 'home') {
+                // 保持根路径（不使用 #home），直接使用 index 中已有的内容
+                // 保留当前的 path 和 query，移除任何 hash
+                history.pushState(null, '', window.location.pathname + window.location.search);
+                loadPage('home');
+            } else {
+                window.location.hash = page;
+            }
         });
     });
     window.addEventListener('hashchange', () => {
