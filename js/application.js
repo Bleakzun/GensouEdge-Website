@@ -29,15 +29,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const html = await response.text();
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
-            // 收集页面中所有的 .row 元素并保留它们的 outerHTML，
-            // 这样可以在页面中显示多个 row（例如第二个及后续的 row）
-            const rowElems = doc.querySelectorAll('.row');
+            // 将页面中的所有顶级 body 子元素按顺序收集并插入（包括 .row，以及单独的 h1、p 等）
+            // 这样可以保证 pages 文件夹里的页面既能显示 .row，也能显示其它独立标签
+            const bodyChildren = Array.from(doc.body.children || []);
             let content = '';
-            if (rowElems.length > 0) {
-                content = Array.from(rowElems).map(el => el.outerHTML).join('');
+            if (bodyChildren.length > 0) {
+                content = bodyChildren.map(el => el.outerHTML).join('');
             } else {
-                // 回退：如果没有找到 .row，则使用 body 的 innerHTML（可兼容不同页面结构）
-                content = doc.body.innerHTML || '';
+                // 兼容回退：如果 body 没有直接子节点，则再尝试查找 .row，最后回退到整个 body.innerHTML
+                const rowElems = doc.querySelectorAll('.row');
+                if (rowElems.length > 0) {
+                    content = Array.from(rowElems).map(el => el.outerHTML).join('');
+                } else {
+                    content = doc.body.innerHTML || '';
+                }
             }
             if (!content) throw new Error('Invalid page structure');
             pageCache[page] = content;
