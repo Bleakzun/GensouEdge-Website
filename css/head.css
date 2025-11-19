@@ -1,13 +1,13 @@
-/* 使用根部节点托管颜色，随便改 */
+/* Pop-art 配色与变量 */
 :root {
-    --brand-colour: #333;
-    --brand-active: #008CBA;
-    --accent-colour: #dadada;
-    --text-colour: #333;
-    --muted-text: #666;
-    --bg-colour: #f1f1f1;
-    --card-bg: #fff;
-    --border-colour: #e0e0e0;
+    --pop-magenta: #ff2d95;
+    --pop-cyan: #00d4ff;
+    --pop-yellow: #ffd400;
+    --pop-black: #0b0b0b;
+    --pop-white: #ffffff;
+    --text-colour: #0b0b0b;
+    --muted-text: #333333;
+    --bg-base: #fffce8; /* 淡黄底 */
 }
 
 
@@ -18,16 +18,18 @@
 }
 
 body {
-    font-family: "Noto Sans SC", sans-serif;
+    font-family: "Roboto", "Noto Sans SC", sans-serif;
     color: var(--text-colour);
-    background: var(--bg-colour);
-    padding: 10px;
+    background: var(--bg-base);
+    padding: 12px;
 }
 
+/* 标题使用更夸张的 display 字体以贴合波普风 */
 h1, h2, h3 {
-    font-family: "Lora", "Noto Serif SC", serif;
+    font-family: "Luckiest Guy", "Lora", serif;
     font-weight: 700;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
 }
 
 /* 链接样式 */
@@ -46,47 +48,64 @@ a {
 
 /* 头部标题 */
 .header {
-    padding: 30px;
+    padding: 28px 24px;
     text-align: center;
-    background: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(90deg, var(--pop-cyan), var(--pop-magenta));
+    color: var(--pop-white);
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(11,11,11,0.12);
+    position: relative;
+    overflow: visible;
 }
 
 .header h1 {
-    font-size: 50px;
+    font-size: 56px;
+    line-height: 1;
+    margin-bottom: 6px;
+    /* 粗旷的外描边效果，制造漫画手绘感 */
+    text-shadow: -2px -2px 0 var(--pop-black), 2px 2px 0 var(--pop-black), -2px 2px 0 var(--pop-black), 2px -2px 0 var(--pop-black);
+}
+.header h3 {
+    font-size: 18px;
+    letter-spacing: 1px;
 }
 
 /* 导航条 */
 .topnav {
     display: flex;
     flex-wrap: wrap;
-    background-color: var(--brand-colour);
-    color: white;
+    gap: 6px;
+    margin: 14px 0;
 }
 
 /* 导航条链接 */
 .topnav a {
-    flex: 1 1 auto;
-    text-align: center;
-    padding: 14px 16px;
-    color: var(--border-colour);
-    transition: background 0.3s;
+    flex: none;
+    padding: 10px 16px;
+    color: var(--pop-black);
+    background: var(--pop-yellow);
+    border-radius: 6px;
+    font-weight: 700;
+    box-shadow: 0 8px 0 rgba(0,0,0,0.12);
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
 }
 
 /* 鼠标悬停导航栏颜色修改 */
 .topnav a:hover {
-    background-color: var(--accent-colour);
-    color: black;
+    transform: translateY(-3px);
+    box-shadow: 0 14px 0 rgba(0,0,0,0.12);
 }
 
 .topnav a:last-child {
-    margin-left: auto;
+    margin-left: 8px;
 }
 
 /* 导航栏链接选中 */
-a.active {
-    background-color: var(--brand-active);
+.topnav a.active {
+    background: linear-gradient(90deg, var(--pop-magenta), var(--pop-cyan));
     color: white;
+    transform: translateY(-4px);
+    box-shadow: 0 16px 0 rgba(0,0,0,0.16);
 }
 
 /* 内容行容器 */
@@ -115,19 +134,20 @@ a.active {
 .card {
     display: flex;
     flex-direction: column;
-    background-color: white;
-    padding: 20px;
+    background-color: var(--pop-white);
+    padding: 18px;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     gap: 10px;
+    border: 6px solid var(--pop-yellow);
+    box-shadow: 0 18px 0 rgba(11,11,11,0.08);
 }
 .card p {
     color: var(--text-colour);
 }
 .card:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-    transition: 0.3s ease;
+    transform: translateY(-8px) rotate(-1deg);
+    box-shadow: 0 28px 0 rgba(11,11,11,0.10);
+    transition: transform 0.18s cubic-bezier(.2,.9,.2,1);
 }
 .card.visible {
     opacity: 1;
@@ -139,11 +159,11 @@ a.active {
     flex: 1 1 30%;
     display: flex;
     flex-direction: column;
-    background-color: white;
-    padding: 20px;
+    background-color: var(--pop-white);
+    padding: 18px;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     gap: 10px;
+    border: 6px dashed var(--pop-cyan);
 }
 
 /* 图像部分 */
@@ -152,9 +172,9 @@ a.active {
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
-    background-color: #aaa;
+    background: repeating-radial-gradient(circle at 10% 10%, #ffd400 0, #ffd400 4px, transparent 4px, transparent 8px);
     padding: 10px;
-    border-radius: 4px;
+    border-radius: 6px;
 }
 
 .fakeimg img {
@@ -171,8 +191,9 @@ a.active {
     justify-content: center;
     align-items: center;
     padding: 20px;
-    background: var(--border-colour);
+    background: linear-gradient(90deg, var(--pop-yellow), #fff8e6);
     margin-top: 20px;
+    border-top: 6px solid var(--pop-magenta);
 }
 
 .banner-container {
@@ -184,9 +205,9 @@ a.active {
     max-width: 400px;
     height: 400px;
     margin: 20px auto;
-    border-radius: 20px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 18px 0 rgba(11,11,11,0.08);
     position: relative;
 }
 
@@ -261,7 +282,7 @@ a.active {
 }
 
 .banner-dots span.active {
-    background: var(--accent-colour);
+    background: var(--pop-magenta);
 }
 
 /* 响应式：平板及以下（max-width: 900px） */
@@ -280,22 +301,23 @@ a.active {
 
     .topnav a {
         flex: 1 1 100%;
+        margin: 6px 0;
     }
 
     .header h1 {
-        font-size: 32px;
+        font-size: 36px;
     }
 
     .card {
-        padding: 15px;
+        padding: 14px;
     }
 
     .banner-container {
-        width: 80%; /* 宽度不超过80% */
-        height: auto; /* 高度自适应 */
-        aspect-ratio: 1 / 1; /* 宽高比1:1，形成正方形 */
-        max-width: 400px; /* 设置最大宽度避免过大 */
-        border-radius: 8px;
+        width: 90%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        max-width: 360px;
+        border-radius: 10px;
     }
 
     .banner-btn {
@@ -308,6 +330,17 @@ a.active {
         width: 10px;
         height: 10px;
     }
+}
+
+/* Halftone / 点状背景 for content container */
+#content-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle at 10% 10%, rgba(0,0,0,0.03) 0 2px, transparent 2px 6px);
+    opacity: 0.6;
+    mix-blend-mode: multiply;
 }
 
 /* 这里我定义了一个 Hero Banner，想用可以用 */
